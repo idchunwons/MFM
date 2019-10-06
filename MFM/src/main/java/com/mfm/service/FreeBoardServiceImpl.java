@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mfm.mapper.FreeBoardMapper;
+import com.mfm.paging.PagingAction;
 import com.mfm.vo.FreeBoardVO;
 
 @Service
@@ -25,7 +28,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	}
 
 	@Override
-	public FreeBoardVO get(Long bno) {
+	public FreeBoardVO get(long bno) {
 		return freeboardmapper.get(bno);
 	}
 
@@ -39,6 +42,19 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		freeboardmapper.remove(bno);
 	}
 
+	@Override
+	public List<FreeBoardVO> getList(PagingAction pa) {
+		return freeboardmapper.getListWithPaging(pa);
+	}
+
+	@Override
+	public int getTotal(PagingAction pa) {
+		return freeboardmapper.getTotal(pa);
+	}
+
+	
+	
+	
 	/*
 	 * @Override public List<FreeBoardVO> getList(PagingAction pa) { return
 	 * freeboardmapper.getListWithPaging(pa); }

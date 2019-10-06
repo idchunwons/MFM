@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mfm.mapper.MemberMapper">
+	<!-- 회원 정보 등록 -->
+	<insert id="signup">
+		insert into
+		MEMBERPROFILE(MEMBERNUM,MEMBERID,MEMBERPW,MEMBERNAME,MEMBERADDRESS,MEMBERZIPCODE,MEMBERADDRESS2,MEMBEREMAIL,MEMBERGENDER,MEMBERDATEOFBIRTH,MEMBERGRADE,MEMBERWEIGHT,MEMBERHEIGHT,MEMBERINTRODUCE)
+		values(MEMBERPROFILE_SEQ.nextval,#{memberid},#{memberpw},#{membername},#{memberaddress},#{memberzipcode},#{memberaddress2},#{memberemail},#{membergender},#{memberdateofbirth},#{membergrade},#{memberweight},#{memberheight},#{memberintroduce})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" resultType="com.mfm.vo.MemberProfileVO">
+        <![CDATA[
+          SELECT * 
+          FROM MEMBERPROFILE 
+          WHERE MEMBERID = #{memberid}
+      	]]>
+    </select>
+	
+</mapper>

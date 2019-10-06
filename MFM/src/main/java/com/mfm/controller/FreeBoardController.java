@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mfm.paging.PageDTO;
+import com.mfm.paging.PagingAction;
 import com.mfm.service.FreeBoardService;
 import com.mfm.vo.FreeBoardVO;
 
@@ -20,8 +23,16 @@ import com.mfm.vo.FreeBoardVO;
 public class FreeBoardController {
 	private static final Logger logger=
 			LoggerFactory.getLogger(FreeBoardController.class);
+	 
+	private final FreeBoardService freeboardservice;
+	
 	@Inject
-	private FreeBoardService freeboardservice;
+	public FreeBoardController(FreeBoardService freeboardservice) {
+		this.freeboardservice = freeboardservice;
+	}
+	
+	@Autowired
+	private PageDTO page;
 	
 	//자유게시판 등록 페이지 이동
 	@GetMapping("/register")
@@ -61,8 +72,8 @@ public class FreeBoardController {
 	@GetMapping("/modify")
 	public String modifyGET(@RequestParam("bno") Long bno, Model model) {
 		logger.info("modifyGET...");
-		model.addAttribute("modify", freeboardservice.get(bno));
-		return "redirect:/board/freeboard/list";
+		model.addAttribute("get", freeboardservice.get(bno));
+		return "/board/freeboard/modify";
 	}
 	
 	// 수정 처리
@@ -83,4 +94,18 @@ public class FreeBoardController {
 		rttr.addFlashAttribute("msg", "delSuccess");
 		return "redirect:/board/freeboard/list";
 	}
+	
+	//페이징 처리
+	@GetMapping("/listCriteria")
+	public String listCriteria(Model model, PagingAction pa) {
+		logger.info("listCriteria...");
+		model.addAttribute("list", freeboardservice.getList(pa));
+		int total = freeboardservice.getTotal(pa);
+		page.paging(pa,total);
+		model.addAttribute("pageMaker",page);
+		model.addAttribute("total",total);
+		return "/board/freeboard/listcriteria";
+	}
+	
+	
 }

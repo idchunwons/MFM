@@ -8,7 +8,7 @@
 <%@include file="../../include/head.jsp"%>
 
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -22,7 +22,7 @@
     <section class="content-header">
       <h1>
        	 자유게시판
-        <small>입력페이지</small>
+        <small>총 게시물수 : ${total}</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -42,7 +42,7 @@
             <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <th style="width: 30px">#</th>
+                    <th style="width: 115px">게시글 번호</th>
                     <th>제목</th>
                     <th style="width: 100px">작성자</th>
                     <th style="width: 150px">작성시간</th>
@@ -53,7 +53,7 @@
                     <td>${freeboard.bno}</td>
                     <td><a href="${contextPath}/board/freeboard/get?bno=${freeboard.bno}">${freeboard.title}</a></td>
                     <td>${freeboard.writer}</td>
-                    <td><fmt:formatDate value="${freeboard.regDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                    <td><fmt:formatDate value="${freeboard.regDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     <td><span class="badge bg-red">${freeboard.viewCnt}</span></td>
                 </tr>
                 </c:forEach>
@@ -84,6 +84,16 @@
 
 </body>
 <script type="text/javascript">
+$(document).ready(function () {
+
+	var formObj = $("form[role='form']");
+    console.log(formObj);
+	
+    $(".btn-flat").on("click", function () {
+        self.location = "${contextPath}/board/freeboard/register"
+    
+});
+});
 	var result = "${msg}";
 	if (result == "regSuccess") {
 		alert("게시글 등록이 완료되었습니다.");

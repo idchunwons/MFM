@@ -8,7 +8,7 @@
 <%@include file="../../include/head.jsp"%>
 
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -40,19 +40,19 @@
                 <h3 class="box-title">게시글 작성</h3>
             </div>
             <div class="box-body">
-                <input type="hidden" name="articleNo" value="${modify.articleNo}">
+                <input type="hidden" name="bno" id="bno" value="${get.bno}">
                 <div class="form-group">
                     <label for="title">제목</label>
-                    <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${modify.title}">
+                    <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${get.title}">
                 </div>
                 <div class="form-group">
                     <label for="content">내용</label>
                     <textarea class="form-control" id="content" name="content" rows="30"
-                              placeholder="내용을 입력해주세요" style="resize: none;">${modify.content}</textarea>
+                              placeholder="내용을 입력해주세요" style="resize: none;">${get.content}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="writer">작성자</label>
-                    <input class="form-control" id="writer" name="writer" value="${modify.writer}" readonly>
+                    <input class="form-control" id="writer" name="writer" value="${get.writer}" readonly>
                 </div>
             </div>
             <div class="box-footer">
@@ -96,9 +96,8 @@ $(document).ready(function () {
     });
 
     $(".listBtn").on("click", function () {
-        self.location = "/article/list"
+        self.location = "/board/freeboard/list"
     });
-
 });
 </script>
 </html>
